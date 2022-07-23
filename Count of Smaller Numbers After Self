@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+class Solution {
+    vector<int> result;
+   void merge( vector<pair<int,int>>& numsp, int l,int mid, int r){
+        int i=l, j=mid+1;
+       
+       int k=0;
+     
+       int count=0;
+     vector<pair<int,int>>a(r-l+1,pair<int,int>());
+      
+       while(i<=mid && j<=r){
+           if(numsp[i].first>numsp[j].first){
+              count++;
+               
+               a[k++]=numsp[j++];
+           }
+           else{
+               a[k]=numsp[i];
+               result[numsp[i].second]+=count;
+               i++;
+               k++;
+           }
+       }
+       while(i<=mid){
+           a[k]=numsp[i];
+              result[numsp[i].second]+=count;
+               i++;
+               k++;
+       }
+       for(int i=0; i<k; i++){
+           numsp[l+i]=a[i];
+       }
+   }
+    
+    void mergeSort( vector<pair<int,int>>& numsp, int l, int r){
+        if(l>=r) return;
+        int mid=l+(r-l)/2;
+        mergeSort(numsp,l,mid);
+        mergeSort(numsp,mid+1,r);
+        merge(numsp,l,mid,r);
+       
+    }
+public:
+    vector<int> countSmaller(vector<int>& nums) {
+        int n=nums.size();
+        result.resize(n);
+       vector<pair<int,int>>numsp(n,pair<int,int>());
+        for(int i=0; i<n; i++){
+           numsp[i]={nums[i],i};
+           
+        }
+        mergeSort(numsp,0,n-1);      
+        return result;
+    }
+};
