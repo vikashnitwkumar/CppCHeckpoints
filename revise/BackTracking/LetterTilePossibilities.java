@@ -1,12 +1,5 @@
-import java.sql.Array;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
-
-class Solution {
-
+class LetterTilePossibilities{
     void helper(int x, char[] original, StringBuilder temp, Integer result, boolean[] visited) {
         if(x == 0){
             
@@ -21,22 +14,18 @@ class Solution {
         }
     }
    
-    public int numTilePossibilities(String tiles) {
-    
+    public int numTilePossibilities(String tiles) {    
         char[] original = tiles.toCharArray();
         int n = original.length;
         Integer result = new Integer();
         result = 0;
         Arrays.sort(original);
-
         for (int i = 1; i < original.length + 1; i++) {
             Set<String> set = new HashSet<String>();
             boolean[] visited = new boolean[n];
              helper(i, original, new StringBuilder(), result, visited);
-             //System.out.println(set.size());
              result += set.size();
         }
-        return result;
-      
+        return result;      
     }
 }
