@@ -6,22 +6,14 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
-
-
 class Solution {
-    public int maxAbsoluteSum(int[] nums) {
-        int maxs = 0;
-        int mins = 0;
-        int tempmax = 0;
-        int tempmin = 0;
-        for(int i = 0; i < nums.length; i++){
-            tempmax += nums[i];
-            tempmin += nums[i];
-            maxs = Math.max(maxs, tempmax);
-            mins = Math.min(mins, tempmin);
-            tempmax = Math.max(0, tempmax);
-            tempmin = Math.min(0, tempmin);
+    public boolean checkPowersOfThree(int n) {
+        while(n!=0){
+            if(n%3==2){
+                return false;
+            }
+            n=n/3;
         }
-        return Math.max(maxs, -mins);
+        return true;
     }
 }
