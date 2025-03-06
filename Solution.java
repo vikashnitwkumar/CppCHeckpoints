@@ -7,12 +7,20 @@ import java.util.Set;
 import java.util.Stack;
 
 class Solution {
-    public long coloredCells(int n) {
-        return 1+(long)2*n*(n-1);
+    public int[] findMissingAndRepeatedValues(int[][] grid) {
+        int diffSum =0;
+        int diffSqrSum = 0;
+        int itr = 1;
+        for(int[] row : grid){
+            for(int col : row){
+                diffSum += col - itr;
+                diffSqrSum += col*col - itr*itr;
+                itr++;
+            }
+        }
+        int summ = diffSqrSum/diffSum;
+        int x = (summ + diffSum)/2; //repeated
+        int y = summ - x; //missing
+        return new int[]{x,y};
     }
 }
-
-// 1 -> 1
-// 2 -> 4 (2+2+ 0+ 0)
-// 3 -> 8 ( 3+ 3+ 1+ 1)
-// 4 -> 12 ( 4+ 4+ 2+ 2)
