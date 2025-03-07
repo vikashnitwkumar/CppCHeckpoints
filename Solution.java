@@ -6,21 +6,30 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
+
+
 class Solution {
-    public int[] findMissingAndRepeatedValues(int[][] grid) {
-        int diffSum =0;
-        int diffSqrSum = 0;
-        int itr = 1;
-        for(int[] row : grid){
-            for(int col : row){
-                diffSum += col - itr;
-                diffSqrSum += col*col - itr*itr;
-                itr++;
+    public int[] closestPrimes(int left, int right) {
+        boolean[] primes = new boolean[right+1];
+        Arrays.fill(primes, true);
+        int prev = 0;
+        int res = Integer.MAX_VALUE;
+        int[] ret= new int[]{-1,-1};
+        for(int i=2; i<=right; i++){
+            if(primes[i]) {
+                for(int j=2*i; j<=right; j+=i){
+                    primes[j] = false;
+                }
+                if(i < left) continue;
+                if(res > i-prev && prev!=0) {
+                    res = i-prev;
+                    ret = new int[]{prev, i};
+                }
+                prev = i;
+                continue;
             }
+            
         }
-        int summ = diffSqrSum/diffSum;
-        int x = (summ + diffSum)/2; //repeated
-        int y = summ - x; //missing
-        return new int[]{x,y};
+        return ret;
     }
 }
