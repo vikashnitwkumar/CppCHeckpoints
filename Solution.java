@@ -6,38 +6,25 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-
-
 class Solution {
-    boolean helper(int[] nums, int[][] queries, int qn){
-        int n = nums.length;
-        int[] prefix = new int[n + 1];
-       for (int i = 0; i <= qn; i++) {
-            prefix[queries[i][0]] += queries[i][2];
-            prefix[queries[i][1] + 1] -= queries[i][2];
-       }
-       int temp = 0;
-       for (int i = 0; i < n; i++) {
-           temp += prefix[i];
-           if(temp <nums[i]) return false;
-       }
-        return true;
+    void flipNextN(int[] nums, int i, int n) {
+        for(int j = i; j < i + n; j++) {
+            nums[j] = 1 - nums[j];
+        }
     }
-    public int minZeroArray(int[] nums, int[][] queries) {        
-        int n = queries.length;
-        int l = 0, r = n;
-        int result = -2;
-        int maxVal = Arrays.stream(nums).max().getAsInt();
-        if(maxVal <= 0) return 0;
-        while (l < r) {
-            int mid = l + (r - l) / 2;
-            if (helper(nums, queries, mid)) {
-                result = mid;
-                r = mid;
-            } else {
-                l = mid + 1;
+    public int minOperations(int[] nums) {
+        int n = nums.length;
+        int count = 0;
+        for(int i=0; i<n-2; i++) {
+            if(nums[i] == 0) {  
+                flipNextN(nums, i, 3);
+                count++;
+               // System.out.println(i + " " +nums[i] + " " + nums[i+1] + " " + nums[i+2] + " " + count);
             }
         }
-        return result+1;
+        if(nums[n-1] == 0 || nums[n-2] == 0 || nums[n-3] == 0) {
+            return -1;
+        }
+        return count;
     }
 }
